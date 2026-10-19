@@ -38,7 +38,7 @@ export interface Day {
   condition: Condition;
 }
 export interface ForecastDay {
-  date: 'string';
+  date: string;
   day: Day[];
 }
 
