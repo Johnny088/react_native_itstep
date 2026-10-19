@@ -30,3 +30,19 @@ export interface WeatherType {
   location: Location;
   current: Current;
 }
+export interface Day {
+  mintemp_c: number;
+  maxtemp_c: number;
+  avgvis_km: number;
+  avghumidity: number;
+  condition: Condition;
+}
+export interface ForecastDay {
+  date: 'string';
+  day: Day[];
+}
+
+export interface ForecastType {
+  location: Location;
+  forecast: ForecastDay;
+}
