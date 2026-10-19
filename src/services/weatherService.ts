@@ -13,7 +13,7 @@ export const getCurrentWeather = async (city: string): Promise<WeatherType> => {
 export const getThreeDaysForecast = async (
   city: string,
   days: number
-): Promise<ForecastType[]> => {
+): Promise<ForecastType> => {
   const url = `${WEATHER_API_URL}/forecast.json?key=${WEATHER_API_KEY}&q=${city}&days=${days}`;
   const response = await fetch(url);
   const data = await response.json();
