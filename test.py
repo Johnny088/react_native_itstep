@@ -45,3 +45,13 @@ print('------------------------------\n|    Subject   |    Score    |\n')
 
 for x,y in averages:
     print(f'------------------------------\n|    {x}   |    {y}    |\n')
+
+
+
+students = pd.DataFrame({
+    'name': ['Anna', 'Ivan', 'Olena', 'Max', 'Iryna', 'Andriy', 'Alona', 'Dmytro'],
+    'age': [19, 21, 20, 22, 19, 23, 20, 21],
+    'city': ['Kyiv', 'Lviv','Kyiv', 'Odesa', 'Lviv', 'Kyiv', 'Odesa', 'Kyiv' ],
+    'python' : [85, 72, 91, 67, 88, 76, 94, 81],
+    'math' : [78, 69, 95, 73, 84, 80, 91, 77]
+})

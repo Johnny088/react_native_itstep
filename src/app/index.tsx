@@ -43,8 +43,6 @@ export default function Index() {
   };
 
   useEffect(() => {
-    // getCurrentWeather('Dnipro');
-    // getThreeDaysForecast('Dnipro', 3);
     loadWeather(city);
   }, []);
   return (
