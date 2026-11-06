@@ -39,10 +39,13 @@ export interface Day {
 }
 export interface ForecastDay {
   date: string;
-  day: Day[];
+  day: Day;
+}
+export interface ForecastDays {
+  forecastday: ForecastDay[];
 }
 
 export interface ForecastType {
   location: Location;
-  forecast: ForecastDay;
+  forecast: ForecastDays;
 }

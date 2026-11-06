@@ -1,29 +1,29 @@
 import { CurrentWeather } from '@/components/CurrentWeather';
 import { ForecastWeather } from '@/components/ForecastWeather';
 import { SearchBar } from '@/components/SearchBar';
+import { WeatherCard } from '@/components/WeatherCard';
 import { WeatherDetails } from '@/components/WeatherDetails';
-import {
-  getCurrentWeather,
-  getThreeDaysForecast,
-} from '@/services/weatherService';
+import { getCurrentWeather, getForecast } from '@/services/weatherService';
+import type { ForecastDays, ForecastType, WeatherType } from '@/types/weather';
 import { useEffect, useState } from 'react';
 import {
-  Text,
-  StyleSheet,
   ActivityIndicator,
-  Pressable,
+  FlatList,
   ScrollView,
+  StyleSheet,
+  Text,
   View,
 } from 'react-native';
-import type { WeatherType } from '@/types/weather';
 
 export default function Index() {
   const [city, setCity] = useState<string>('Dnipro');
   const [weather, setWeather] = useState<WeatherType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [forecast, setForecast] = useState<ForecastType | null>(null);
 
   const loadWeather = async (cityName: string) => {
+    setError(null);
     if (!cityName.trim()) {
       setError('The city name cannot be empty');
       return;
@@ -32,13 +32,32 @@ export default function Index() {
       setCity(cityName);
       setLoading(true);
       const result = await getCurrentWeather(city);
-      // console.log(result);
+
       setWeather(result);
     } catch (err: any) {
       setError('Error: ' + err);
       setWeather(null);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const forecastHandler = async (days: number) => {
+    if (forecast) {
+      setForecast(null);
+      return;
+    }
+
+    if (!city.trim()) {
+      setError('The city name cannot be empty');
+      return;
+    }
+    try {
+      const result = await getForecast(city, days);
+
+      setForecast(result);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -71,7 +90,14 @@ export default function Index() {
       )}
 
       <WeatherDetails />
-      <ForecastWeather />
+      <ForecastWeather forecastHandler={forecastHandler} />
+      {forecast && (
+        <FlatList
+          data={forecast.forecast.forecastday}
+          keyExtractor={(item) => String(item.date)}
+          renderItem={({ item }) => <WeatherCard weather={item} />}
+        />
+      )}
     </ScrollView>
   );
 }

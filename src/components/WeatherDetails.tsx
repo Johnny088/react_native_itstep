@@ -9,5 +9,5 @@ export const WeatherDetails = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { marginBottom: 60 },
 });
